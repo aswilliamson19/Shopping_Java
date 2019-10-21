@@ -22,5 +22,4 @@ public class Product {
         return this.buyOneGetOneFree;
     }
 
-
 }

@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ShoppingBasket {
@@ -21,7 +22,7 @@ public class ShoppingBasket {
     }
 
     public double getBasketTotal() {
-        return basketTotal;
+        return this.basketTotal;
     }
 
     public int countItems() {
@@ -35,6 +36,11 @@ public class ShoppingBasket {
 
     public double totalPrice() {
         double total = 0;
+
+
+        if (total > 20) {
+            total -= (total * 0.1);
+        }
         if (hasALoyaltyCard()) {
             total = this.basketTotal - (basketTotal * 0.02);
             return total;
@@ -51,6 +57,23 @@ public class ShoppingBasket {
     public void emptyItems() {
         this.items.clear();
         this.basketTotal = 0;
+    }
+
+    public double bOGOF(){
+        double discount = 0;
+        ArrayList offerItems = new ArrayList();
+        for ( Product product : items){
+            if (product.isBuyOneGetOneFree()){
+                offerItems.add(product);
+            }
+        }
+        for (Product product : offerItems){
+            if (product.getQuantity() >=2 && product.getQuantity() / 2 == 0 ){
+                discount = ((product.getQuantity() / 2) * product.getPrice());
+                this.basketTotal -= discount;
+            }
+        }
+        return this.basketTotal;
     }
 
 
