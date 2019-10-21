@@ -7,6 +7,8 @@ public class ShoppingBasketTest {
 
     private ShoppingBasket shoppingBasket1;
     private ShoppingBasket shoppingBasket2;
+    private ShoppingBasket shoppingBasket3;
+
     private Product product1;
     private Product product2;
     private Product product3;
@@ -21,12 +23,17 @@ public class ShoppingBasketTest {
 
         shoppingBasket1 = new ShoppingBasket(true);
         shoppingBasket2 = new ShoppingBasket(false);
+        shoppingBasket3 = new ShoppingBasket(false);
+
         shoppingBasket1.addItem(product1);
         shoppingBasket1.addItem(product4);
 
         shoppingBasket2.addItem(product4);
         shoppingBasket2.addItem(product2);
         shoppingBasket2.addItem(product3);
+
+        shoppingBasket3.addItem(product4);
+        shoppingBasket3.addItem(product4);
     }
 
     @Test
@@ -65,6 +72,11 @@ public class ShoppingBasketTest {
         shoppingBasket1.emptyItems();
         assertEquals(0, shoppingBasket1.countItems());
         assertEquals(0, shoppingBasket1.getBasketTotal(), 0.01);
+    }
+
+    @Test
+    public void canCalculateBuyOneGetOneFree(){
+        assertEquals(6.5, shoppingBasket3.bOGOF(), 0.01);
     }
 
 }

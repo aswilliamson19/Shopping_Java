@@ -1,15 +1,14 @@
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class ShoppingBasket {
 
     private boolean loyaltyCard;
-    private HashMap<String, Double> items;
+    private ArrayList<Product> items;
     private double basketTotal;
 
     public ShoppingBasket(boolean loyaltyCard){
         this.loyaltyCard = loyaltyCard;
-        this.items = new HashMap<String, Double>();
+        this.items = new ArrayList<Product>();
         this.basketTotal = 0;
     }
 
@@ -17,7 +16,7 @@ public class ShoppingBasket {
         return this.loyaltyCard;
     }
 
-    public HashMap<String, Double> getItems() {
+    public ArrayList<Product> getItems() {
         return this.items;
     }
 
@@ -30,13 +29,12 @@ public class ShoppingBasket {
     }
 
     public void addItem(Product product) {
-        this.items.put(product.getName(), product.getPrice());
+        this.items.add(product);
         this.basketTotal += product.getPrice();
     }
 
     public double totalPrice() {
         double total = 0;
-
 
         if (total > 20) {
             total -= (total * 0.1);
@@ -61,20 +59,22 @@ public class ShoppingBasket {
 
     public double bOGOF(){
         double discount = 0;
-        ArrayList offerItems = new ArrayList();
-        for ( Product product : items){
+        int bogofCount = 0;
+        ArrayList<Product> offerItems = new ArrayList();
+
+        for ( Product product : items ){
             if (product.isBuyOneGetOneFree()){
                 offerItems.add(product);
             }
         }
-        for (Product product : offerItems){
-            if (product.getQuantity() >=2 && product.getQuantity() / 2 == 0 ){
-                discount = ((product.getQuantity() / 2) * product.getPrice());
-                this.basketTotal -= discount;
+        for ( Product product : offerItems ){
+//            if (product.getQuantity() >=2 && product.getQuantity() / 2 == 0 ){
+//                discount = ((product.getQuantity() / 2) * product.getPrice());
+//                this.basketTotal -= discount;
+            bogofCount = (offerItems.size()) / 2;
+            discount = product.getPrice() * bogofCount;
+            return this.basketTotal -= discount;
             }
-        }
         return this.basketTotal;
+        }
     }
-
-
-}
